@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="posts">
   <div class="loading" v-if="isLoading">
     <img src="../assets/loading.gif" alt="">
   </div>
@@ -78,7 +78,8 @@ export default {
 </script>
 
 <style scoped>
-.post-item{width: 84%; margin: 0 auto; background: white; padding-top: 20px; margin-top: 15px;}
+.posts{width: 84%; margin: 0 auto; background: #FFFFFF; margin-top: 20px;}
+.post-item{margin: 0 auto; background: white; padding-top: 20px; margin-top: 15px;}
 .header{display: flex; align-items: flex-end;}
 .header .tab{display: inline-block; white-space: nowrap; margin: 0 10px; font-size: 12px; padding: 0 5px; border-radius: 3px; 
   line-height: 1.5em; height: 1.5em; background: #ccc; color: white;}

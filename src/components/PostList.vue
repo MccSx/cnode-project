@@ -60,9 +60,9 @@ export default {
 </script>
 
 <style scoped>
-.posts{width: 84%; margin: 0 auto; background: #FFFFFF;}
+.posts{width: 84%; margin: 0 auto; background: #FFFFFF; margin-top: 20px;}
 .tab{padding-left: 20px;}
-.tab>span{margin-right: 26px; font-size: 14px; color: #80BD01;}
+.tab>span{margin-right: 26px; font-size: 14px; color: #80BD01; cursor: pointer;}
 .tab>span.active{color: white; background: #80BD01; padding: 2px 4px; border-radius: 4px;}
 .post-list ul li{height: 50px; border-bottom: 1px solid #F0F0F0; display: flex; flex-direction: row; align-items: center;}
 .post-list ul li img{height: 65%; border-radius: 3px; margin-left: 1%;}
