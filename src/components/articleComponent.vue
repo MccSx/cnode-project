@@ -20,6 +20,21 @@
         <li>&nbsp;• 来自 {{tabName}}</li>
       </ul>
     </div>
+    <div class="post-content" v-html="articleData.content"></div>
+  </div>
+  <div class="reply">
+    <div>回复</div>
+    <ul>
+      <li v-for="(reply,index) in articleData.replies" :key="reply.id">
+        <div class="reply-l">
+          <img :src="reply.author.avatar_url" alt="" width="30" height="30">
+        </div>
+        <div class="reply-r">
+          <div class="reply-title">{{reply.author.loginname}}{{index+1}}楼</div>
+          <div class="reply-content" v-html="reply.content"></div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 </template>
@@ -77,9 +92,11 @@ export default {
 }
 </script>
 
-<style scoped>
-.posts{width: 84%; margin: 0 auto; background: #FFFFFF; margin-top: 20px;}
-.post-item{margin: 0 auto; background: white; padding-top: 20px; margin-top: 15px;}
+<style>
+@import url('../assets/markdown-github.css');
+
+.posts{width: 84%; margin: 0 auto; margin-top: 20px;}
+.post-item{margin: 0 auto; background: #ffffff; padding-top: 20px; margin-top: 15px;}
 .header{display: flex; align-items: flex-end;}
 .header .tab{display: inline-block; white-space: nowrap; margin: 0 10px; font-size: 12px; padding: 0 5px; border-radius: 3px; 
   line-height: 1.5em; height: 1.5em; background: #ccc; color: white;}
@@ -88,4 +105,5 @@ export default {
 .message{padding-bottom: 15px; border-bottom: 1px solid #838383;}
 .message ul{display: flex; flex-direction: row; margin-top: 20px;}
 .message ul li{font-size: 12px; color: #838383;}
+.reply{margin-top: 15px; background: #ffffff;}
 </style>
