@@ -23,15 +23,26 @@
     <div class="post-content" v-html="articleData.content"></div>
   </div>
   <div class="reply">
-    <div>回复</div>
+    <div>{{replyNum}}回复</div>
     <ul>
       <li v-for="(reply,index) in articleData.replies" :key="reply.id">
         <div class="reply-l">
-          <img :src="reply.author.avatar_url" alt="" width="30" height="30">
+          <img :src="reply.author.avatar_url" alt="">
         </div>
         <div class="reply-r">
-          <div class="reply-title">{{reply.author.loginname}}{{index+1}}楼</div>
+          <div class="reply-title">
+            <span class="reply-name">{{reply.author.loginname}}</span>
+            <span class="reply-num">{{index+1}}楼•{{reply.create_at | timeFilter}}</span>
+          </div>
           <div class="reply-content" v-html="reply.content"></div>
+        </div>
+        <div class="reply-up" v-if="reply.ups.length">
+          <span>
+            <svg class="icon up" aria-hidden="true">
+                <use xlink:href="#icon-dianzan"></use>
+            </svg>
+          </span>
+          {{reply.ups.length}}
         </div>
       </li>
     </ul>
@@ -40,6 +51,7 @@
 </template>
 
 <script>
+import '../assets/icon.js'
 export default {
   name : 'articleConponent',
   data() {
@@ -71,6 +83,13 @@ export default {
       } else {
         return ''        
       }
+    },
+    replyNum() {
+      if (this.articleData.replies) {
+        return this.articleData.replies.length
+      } else {
+        return 0        
+      }
     }
   },
   methods: {
@@ -80,8 +99,7 @@ export default {
         if (res.data.success === true) {
           this.articleData = res.data.data
           this.isLoading = false
-          console.log(this.articleData)
-          //console.log(this.articleData.author.loginname)
+          //console.log(this.articleData.replies.length)
         }
       })
       .catch( err => {
@@ -94,7 +112,14 @@ export default {
 
 <style>
 @import url('../assets/markdown-github.css');
-
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+.up{color: #000;}
+.up:hover{color: #666;}
 .posts{width: 84%; margin: 0 auto; margin-top: 20px;}
 .post-item{margin: 0 auto; background: #ffffff; padding-top: 20px; margin-top: 15px;}
 .header{display: flex; align-items: flex-end;}
@@ -106,4 +131,13 @@ export default {
 .message ul{display: flex; flex-direction: row; margin-top: 20px;}
 .message ul li{font-size: 12px; color: #838383;}
 .reply{margin-top: 15px; background: #ffffff;}
+/* .reply ul{width: 84%;} */
+.reply ul>li{display: flex; border-bottom: 1px solid #F0F0F0; padding: 15px 10px 30px 10px; position: relative;}
+.reply ul>li img{width: 100%;}
+.reply ul>li .reply-l img{width: 30px; height: 30px; border-radius: 4px;}
+.reply ul>li .reply-r{margin-left: 10px;}
+.reply ul>li .reply-r .reply-title .reply-name{font-size: 12px; font-weight: bold;}
+.reply ul>li .reply-r .reply-title .reply-num{font-size: 12px; color: #08c; margin-left: 5px;}
+.reply ul>li .reply-r .reply-content{margin-top: 5px; padding-left: 10px;}
+.reply ul>li .reply-up{position: absolute; right: 10px;}
 </style>
