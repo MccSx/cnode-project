@@ -18,7 +18,7 @@
           <div v-else-if="post.tab === 'job'" class="tab">招聘</div>
           <div class="message">
             <router-link :to="{name: 'article', params: {userId: post.id}}">
-              <p>{{post.title}}</p>
+              {{post.title}}
             </router-link>
             <span>{{post.last_reply_at | timeFilter}}</span>
           </div>
@@ -72,8 +72,8 @@ export default {
 .post-list ul li .tab.top{background: #80BD01;}
 .post-list ul li .reply-count{font-size: 14px;}
 .post-list ul li .visit-count{font-size: 12px; color: #B8B8B8;}
-.post-list ul li .message{width: 100%; display: flex; flex-direction: row; justify-content: space-between; border: none; padding: 0;}
-.post-list ul li .message p{color: black;}
-.post-list ul li .message p:hover{text-decoration: underline;}
+.post-list ul li .message{max-width: 90%; display: flex; flex-direction: row; justify-content: space-between; border: none; padding: 0;}
+.post-list ul li .message a{color: black; white-space: nowrap; text-overflow: ellipsis; vertical-align: middle; overflow: hidden; }
+.post-list ul li .message a:hover{text-decoration: underline;}
 .post-list ul li .message>span{font-size: 14px; color: #B8B8B8; margin-right: 10px;}
 </style>
