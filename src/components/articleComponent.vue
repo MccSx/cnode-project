@@ -27,7 +27,9 @@
     <ul>
       <li v-for="(reply,index) in articleData.replies" :key="reply.id">
         <div class="reply-l">
-          <img :src="reply.author.avatar_url" alt="">
+          <router-link :to="{name: 'user', params: {name: reply.author.loginname}}">
+            <img :src="reply.author.avatar_url" alt="">
+          </router-link>
         </div>
         <div class="reply-r">
           <div class="reply-title">
