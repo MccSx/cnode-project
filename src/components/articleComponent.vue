@@ -20,7 +20,9 @@
         <li>&nbsp;• 来自 {{tabName}}</li>
       </ul>
     </div>
-    <div class="post-content" v-html="articleData.content"></div>
+    <div id="content">
+      <div class="post-content" v-html="articleData.content"></div>
+    </div>
   </div>
   <div class="reply">
     <div>{{replyNum}}回复</div>
@@ -114,6 +116,7 @@ export default {
 
 <style>
 @import url('../assets/markdown-github.css');
+/* @import url('../assets/github-markdown.css'); */
 .icon {
     width: 1em; height: 1em;
     vertical-align: -0.15em;
