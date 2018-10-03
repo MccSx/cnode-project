@@ -116,6 +116,7 @@ export default {
 
 <style>
 @import url('../assets/markdown-github.css');
+/* @import url('../assets/github-markdown.css'); */
 .icon {
     width: 1em; height: 1em;
     vertical-align: -0.15em;
