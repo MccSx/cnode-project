@@ -20,7 +20,9 @@
         <li>&nbsp;• 来自 {{tabName}}</li>
       </ul>
     </div>
-    <div class="post-content" v-html="articleData.content"></div>
+    <div id="content">
+        <div class="post-content" v-html="articleData.content"></div>
+    </div>
   </div>
   <div class="reply">
     <div>{{replyNum}}回复</div>
@@ -140,4 +142,6 @@ export default {
 .reply ul>li .reply-r .reply-title .reply-num{font-size: 12px; color: #08c; margin-left: 5px;}
 .reply ul>li .reply-r .reply-content{margin-top: 5px; padding-left: 10px;}
 .reply ul>li .reply-up{position: absolute; right: 10px;}
+#content{padding: 10px;}
+.post-content{margin: 0 10px;}
 </style>
