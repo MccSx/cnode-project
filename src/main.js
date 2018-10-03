@@ -27,7 +27,7 @@ Vue.filter('timeFilter', function (value) {
   } else if (time / (1000 * 60 * 60 * 24 * 30) < 12) {
     return `${Math.ceil(time / (1000 * 60 * 60 * 24 * 30))} 个月前`
   } else {
-    return `${Math.ceil(time / (1000 * 60 * 60 * 24 * 30))} 年前`
+    return `${Math.floor(time / (1000 * 60 * 60 * 24 * 30 * 12))} 年前`
   }
 })
 
