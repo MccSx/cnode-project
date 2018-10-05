@@ -17,30 +17,20 @@
             <div class="replies">
                 <p>回复的主题</p>
                 <ul>
-                    <li>
-                    <!-- <router-link :to="{
-                    name:'post_content',
-                    params:{
-                        id:item.id
-                    }
-                    }">
-                        {{item.title}}
-                    </router-link> -->
+                    <li v-for="topic in userData.recent_topics" :key="topic.id">
+                    <router-link :to="{name:'post_content',params:{id:topic.id}}">
+                        {{topic.title}}
+                    </router-link>
                     </li>
                 </ul>
             </div>
             <div class="topics">
                 <p>创建的主题</p>
                 <ul>
-                    <li>
-                    <!-- <router-link :to="{
-                    name:'post_content',
-                    params:{
-                        id:item.id
-                    }
-                    }">
-                        {{item.title}}
-                    </router-link> -->
+                    <li v-for="reply in userData.recent_replies" :key="reply.id">
+                    <router-link :to="{name:'post_content',params:{id:reply.id}}">
+                        {{reply.title}}
+                    </router-link>
                     </li>
                 </ul>
             </div>
