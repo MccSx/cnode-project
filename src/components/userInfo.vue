@@ -5,12 +5,13 @@
         </div>
         <div class="userInfomation" v-else>
             <section>
-                <img :src="userData.avatar_url">
-                <span>{{userData.loginname}}</span>
-                <p>
+                <img class="userAvatar" :src="userData.avatar_url">
+                <span class="name">{{userData.loginname}}</span>
+                <p class="integral">
                     {{userData.score}}积分
                 </p>
-                <p>
+                <p class="gitName">@{{userData.githubUsername}}</p>
+                <p class="createTime">
                     注册时间：{{userData.create_at | timeFilter}}
                 </p>
             </section>
@@ -18,9 +19,9 @@
                 <p>回复的主题</p>
                 <ul>
                     <li v-for="topic in userData.recent_topics" :key="topic.id">
-                    <router-link :to="{name:'post_content',params:{id:topic.id}}">
-                        {{topic.title}}
-                    </router-link>
+                        <img :src="topic.author.avatar_url" alt="">
+                        <router-link :to="{name:'post_content',params:{id:topic.id}}">{{topic.title}}</router-link>
+                        <span>{{topic.last_reply_at | timeFilter}}</span>
                     </li>
                 </ul>
             </div>
@@ -28,9 +29,9 @@
                 <p>创建的主题</p>
                 <ul>
                     <li v-for="reply in userData.recent_replies" :key="reply.id">
-                    <router-link :to="{name:'post_content',params:{id:reply.id}}">
-                        {{reply.title}}
-                    </router-link>
+                        <img :src="reply.author.avatar_url" alt="">
+                        <router-link :to="{name:'post_content',params:{id:reply.id}}">{{reply.title}}</router-link>
+                        <span>{{reply.last_reply_at | timeFilter}}</span>
                     </li>
                 </ul>
             </div>
@@ -94,16 +95,61 @@ export default {
     margin: 0;
 }
 .userInfomation > div >ul > li {
-    padding: 4px 0 4px 12px;
+    padding: 10px 0 10px 12px;
     white-space: nowrap;
     font-size: 0.72rem;
     text-overflow: ellipsis;
     overflow: hidden;
     line-height: 30px;
     vertical-align: middle;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
 }
 .userInfomation > div >ul > li > a {
-    color: #094E99;
+    color: #08c;
     text-decoration: none;
+    line-height: 30px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+.userInfomation > div >ul > li > a:hover{
+    text-decoration: underline;
+}
+.userInfomation .userAvatar{
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+}
+.userInfomation .name{
+    vertical-align: top;
+    color: #778087;
+    font-size: 14px;
+    margin-top: 6px;
+    display: inline-block;
+}
+.userInfomation .integral{
+    font-size: 14px;
+    margin-top: 8px;
+}
+.userInfomation .createTime{
+    font-size: 14px;
+    color: #ababab;
+    margin-top: 20px;
+}
+.userInfomation .gitName{
+    font-size: 14px;
+    color: #778087;
+    margin-top: 6px;
+}
+.userInfomation ul>li img{
+    border-radius: 3px;
+    margin-right: 60px;
+}
+.userInfomation ul>li span{
+    display: inline-block;
+    margin-right: 10px;
+    color: #777;
 }
 </style>
