@@ -7,7 +7,9 @@
       <ul>
         <li class="tab"><span class="active">全部</span><span>精华</span><span>分享</span><span>问答</span><span>招聘</span><span>客户端测试</span></li>
         <li v-for="post in posts" :key="post.id">
-          <img :src="post.author.avatar_url" alt="">
+          <router-link :to="{name: 'userInfo', params: {name: post.author.loginname}}">
+            <img :src="post.author.avatar_url" alt="">
+          </router-link>
           <span class="count">
             <span class="reply-count">{{post.reply_count}}</span>/<span class="visit-count">{{post.visit_count}}</span>
           </span>
@@ -65,7 +67,7 @@ export default {
 .tab>span{margin-right: 26px; font-size: 14px; color: #80BD01; cursor: pointer;}
 .tab>span.active{color: white; background: #80BD01; padding: 2px 4px; border-radius: 4px;}
 .post-list ul li{height: 50px; border-bottom: 1px solid #F0F0F0; display: flex; flex-direction: row; align-items: center;}
-.post-list ul li img{height: 65%; border-radius: 3px; margin-left: 1%;}
+.post-list ul li img{height: 65%; border-radius: 3px; margin-left: 10px;}
 .post-list ul li .count{display: flex; justify-content: center; align-items: center; width: 8%;}
 .post-list ul li .tab{display: inline-block; white-space: nowrap; margin: 0 10px; font-size: 12px; padding: 0 5px; border-radius: 3px; 
   line-height: 1.5em; height: 1.5em; background: #ccc; color: white;}
@@ -76,4 +78,5 @@ export default {
 .post-list ul li .message a{color: black; white-space: nowrap; text-overflow: ellipsis; vertical-align: middle; overflow: hidden;}
 .post-list ul li .message a:hover{text-decoration: underline;}
 .post-list ul li .message>span{font-size: 14px; color: #B8B8B8; margin-right: 10px;}
+.post-list ul li>a{height: 100%; display: flex; justify-content: center; align-items: center;}
 </style>
