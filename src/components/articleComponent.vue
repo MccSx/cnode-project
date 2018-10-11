@@ -1,55 +1,71 @@
 <template>
-<div class="posts">
-  <div class="loading" v-if="isLoading">
-    <img src="../assets/loading.gif" alt="">
-  </div>
-  <div class="post-item">
-    <div class="header">
-      <div v-if="articleData.top === true" class="tab top">置顶</div>
-      <div v-else-if="articleData.good === true" class="tab top">精华</div>
-      <div v-else-if="articleData.tab === 'share'" class="tab">分享</div>
-      <div v-else-if="articleData.tab === 'ask'" class="tab">问答</div>
-      <div v-else-if="articleData.tab === 'job'" class="tab">招聘</div>
-      <h2>{{articleData.title}}</h2>
+<div class="article">
+  <div class="posts">
+    <div class="loading" v-if="isLoading">
+      <img src="../assets/loading.gif" alt="">
     </div>
-    <div class="message">
+    <div class="post-item">
+      <div class="header">
+        <div v-if="articleData.top === true" class="tab top">置顶</div>
+        <div v-else-if="articleData.good === true" class="tab top">精华</div>
+        <div v-else-if="articleData.tab === 'share'" class="tab">分享</div>
+        <div v-else-if="articleData.tab === 'ask'" class="tab">问答</div>
+        <div v-else-if="articleData.tab === 'job'" class="tab">招聘</div>
+        <h2>{{articleData.title}}</h2>
+      </div>
+      <div class="message">
+        <ul>
+          <li>&nbsp;• 发布与 {{articleData.create_at | timeFilter}}</li>
+          <li>&nbsp;• 作者 {{authorName}}</li>
+          <li>&nbsp;• {{articleData.visit_count}} 次浏览</li>
+          <li>&nbsp;• 来自 {{tabName}}</li>
+        </ul>
+      </div>
+      <div id="content">
+          <div class="post-content" v-html="articleData.content"></div>
+      </div>
+    </div>
+    <div class="reply">
+      <div>{{replyNum}}回复</div>
       <ul>
-        <li>&nbsp;• 发布与 {{articleData.create_at | timeFilter}}</li>
-        <li>&nbsp;• 作者 {{authorName}}</li>
-        <li>&nbsp;• {{articleData.visit_count}} 次浏览</li>
-        <li>&nbsp;• 来自 {{tabName}}</li>
+        <li v-for="(reply,index) in articleData.replies" :key="reply.id">
+          <div class="reply-l">
+            <router-link :to="{name: 'userInfo', params: {name: reply.author.loginname}}">
+                <img :src="reply.author.avatar_url" alt="">
+            </router-link>
+          </div>
+          <div class="reply-r">
+            <div class="reply-title">
+              <span class="reply-name">{{reply.author.loginname}}</span>
+              <span class="reply-num">{{index+1}}楼•{{reply.create_at | timeFilter}}</span>
+            </div>
+            <div class="reply-content" v-html="reply.content"></div>
+          </div>
+          <div class="reply-up" v-if="reply.ups.length">
+            <span>
+              <svg class="icon up" aria-hidden="true">
+                  <use xlink:href="#icon-dianzan"></use>
+              </svg>
+            </span>
+            {{reply.ups.length}}
+          </div>
+        </li>
       </ul>
     </div>
-    <div id="content">
-        <div class="post-content" v-html="articleData.content"></div>
-    </div>
   </div>
-  <div class="reply">
-    <div>{{replyNum}}回复</div>
-    <ul>
-      <li v-for="(reply,index) in articleData.replies" :key="reply.id">
-        <div class="reply-l">
-          <router-link :to="{name: 'userInfo', params: {name: reply.author.loginname}}">
-              <img :src="reply.author.avatar_url" alt="">
-          </router-link>
+  <div class="silde-bar">
+    <div class="author">
+      <h2>作者</h2>
+      <div class="author-message">
+        <div class="author-avatar">
+          <img :src="avatarUrl" alt="">
+          <span class="name">{{authorName}}</span>
         </div>
-        <div class="reply-r">
-          <div class="reply-title">
-            <span class="reply-name">{{reply.author.loginname}}</span>
-            <span class="reply-num">{{index+1}}楼•{{reply.create_at | timeFilter}}</span>
-          </div>
-          <div class="reply-content" v-html="reply.content"></div>
-        </div>
-        <div class="reply-up" v-if="reply.ups.length">
-          <span>
-            <svg class="icon up" aria-hidden="true">
-                <use xlink:href="#icon-dianzan"></use>
-            </svg>
-          </span>
-          {{reply.ups.length}}
-        </div>
-      </li>
-    </ul>
+        <p>
+          <span class="score">积分: {{userData.score}}</span>
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -61,7 +77,8 @@ export default {
   data() {
     return {
       isLoading: true,
-      articleData: {}
+      articleData: {},
+      userData: {}
     }
   },
   beforeMount() {
@@ -94,6 +111,13 @@ export default {
       } else {
         return 0        
       }
+    },
+    avatarUrl() {
+      if (this.articleData.author) {
+        return this.articleData.author.avatar_url
+      } else {
+        return ''
+      }
     }
   },
   methods: {
@@ -104,11 +128,23 @@ export default {
           this.articleData = res.data.data
           this.isLoading = false
           //console.log(this.articleData.replies.length)
+          this.getUserInfo(this.articleData.author.loginname)
         }
       })
       .catch( err => {
         console.log(err)
       })
+    },
+    getUserInfo(name) {
+        this.$axios.get(`https://cnodejs.org/api/v1/user/${name}`)
+        .then( res => {
+            if (res.data.success === true) {
+                this.userData = res.data.data
+            }
+        })
+        .catch( err => {
+            console.log(err)
+        })
     }
   }
 }
@@ -125,14 +161,15 @@ export default {
 }
 .up{color: #000;}
 .up:hover{color: #666;}
-.posts{width: 84%; margin: 0 auto; margin-top: 20px;}
-.post-item{margin: 0 auto; background: #ffffff; padding-top: 20px; margin-top: 15px;}
+.posts{width: 75%; }
+.post-item{margin: 0 auto; background: #ffffff; padding-top: 20px;}
 .header{display: flex; align-items: flex-end;}
 .header .tab{display: inline-block; white-space: nowrap; margin: 0 10px; font-size: 12px; padding: 0 5px; border-radius: 3px; 
   line-height: 1.5em; height: 1.5em; background: #ccc; color: white;}
 .header .tab.top{background: #80BD01;}
 .header h2{font-size: 20px; font-weight: bold;}
-.message{padding-bottom: 15px; border-bottom: 1px solid #838383;}
+.article{width: 84%; margin: 0 auto; margin-top: 20px; display: flex;}
+.message{padding-bottom: 15px; border-bottom: 1px solid #ccc;}
 .message ul{display: flex; flex-direction: row; margin-top: 20px;}
 .message ul li{font-size: 12px; color: #838383;}
 .reply{margin-top: 15px; background: #ffffff;}
@@ -147,4 +184,12 @@ export default {
 .reply ul>li .reply-up{position: absolute; right: 10px;}
 #content{padding: 10px;}
 .post-content{margin: 0 10px;}
+.silde-bar{width: 23%; margin-left: 1.2%; border: 1px solid red;}
+.silde-bar .author{border-radius: 3px;}
+.silde-bar .author h2{background: #f6f6f6; color: #444; font-size: 13px; padding: 10px;}
+.silde-bar .author-message{background: #fff; padding: 10px;}
+.silde-bar .author-message .author-avatar img{width: 48px; height: 48px; border-radius: 3px; vertical-align: middle;}
+.silde-bar .author-message .author-avatar .name{color: #778087; font-size: 16px; margin-left: 6px;}
+.silde-bar .author-message p{margin-top: 10px;}
+.silde-bar .author-message .score{font-size: 14px; color: #333; line-height: 2em;}
 </style>
