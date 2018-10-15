@@ -66,6 +66,12 @@
         </p>
       </div>
     </div>
+    <div class="topic1">
+      <h2>作者其它问题</h2>
+    </div>
+    <div class="topic2">
+      <h2>无人回复的话题</h2>
+    </div>
   </div>
 </div>
 </template>
@@ -186,10 +192,11 @@ export default {
 .post-content{margin: 0 10px;}
 .silde-bar{width: 23%; margin-left: 1.2%; border: 1px solid red;}
 .silde-bar .author{border-radius: 3px;}
-.silde-bar .author h2{background: #f6f6f6; color: #444; font-size: 13px; padding: 10px;}
+.silde-bar h2{background: #f6f6f6; color: #444; font-size: 13px; padding: 10px;}
 .silde-bar .author-message{background: #fff; padding: 10px;}
 .silde-bar .author-message .author-avatar img{width: 48px; height: 48px; border-radius: 3px; vertical-align: middle;}
 .silde-bar .author-message .author-avatar .name{color: #778087; font-size: 16px; margin-left: 6px;}
 .silde-bar .author-message p{margin-top: 10px;}
 .silde-bar .author-message .score{font-size: 14px; color: #333; line-height: 2em;}
+.silde-bar .topic1,.silde-bar .topic2{margin-top: 10px;}
 </style>
