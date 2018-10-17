@@ -67,10 +67,12 @@
       </div>
     </div>
     <div class="topic1">
-      <h2>作者其它问题</h2>
+      <h2>作者最近主题</h2>
+      <p v-for="(reply, index) in userData.recent_replies" v-show="index<5" :key="index"><a href="#">{{reply.title}}</a></p>
     </div>
     <div class="topic2">
-      <h2>无人回复的话题</h2>
+      <h2>作者最近回复</h2>
+      <p v-for="(topic, index) in userData.recent_topics" v-show="index<5" :key="index"><a href="#">{{topic.title}}</a></p>
     </div>
   </div>
 </div>
@@ -190,7 +192,7 @@ export default {
 .reply ul>li .reply-up{position: absolute; right: 10px;}
 #content{padding: 10px;}
 .post-content{margin: 0 10px;}
-.silde-bar{width: 23%; margin-left: 1.2%; border: 1px solid red;}
+.silde-bar{width: 23%; margin-left: 1.2%;}
 .silde-bar .author{border-radius: 3px;}
 .silde-bar h2{background: #f6f6f6; color: #444; font-size: 13px; padding: 10px;}
 .silde-bar .author-message{background: #fff; padding: 10px;}
@@ -198,5 +200,9 @@ export default {
 .silde-bar .author-message .author-avatar .name{color: #778087; font-size: 16px; margin-left: 6px;}
 .silde-bar .author-message p{margin-top: 10px;}
 .silde-bar .author-message .score{font-size: 14px; color: #333; line-height: 2em;}
-.silde-bar .topic1,.silde-bar .topic2{margin-top: 10px;}
+.silde-bar .topic1,.silde-bar .topic2{margin-top: 10px; background: #fff; padding-bottom: 10px;}
+.silde-bar p>a{font-size: 14px; color: #778087; line-height: 30px; text-decoration: none; white-space: nowrap;
+    display: inline-block; text-overflow: ellipsis; overflow: hidden; vertical-align: middle;max-width: 100%;}
+.silde-bar p{padding-left: 10px;}
+.silde-bar h2{margin-bottom: 10px;}
 </style>
