@@ -56,6 +56,7 @@
   <div class="silde-bar">
     <div class="author">
       <h2>作者</h2>
+      <div class="hei10"></div>
       <div class="author-message">
         <div class="author-avatar">
           <img :src="avatarUrl" alt="">
@@ -68,10 +69,12 @@
     </div>
     <div class="topic1">
       <h2>作者最近主题</h2>
+      <div class="hei10"></div>
       <p v-for="(reply, index) in userData.recent_replies" v-show="index<5" :key="index"><a href="#">{{reply.title}}</a></p>
     </div>
     <div class="topic2">
       <h2>作者最近回复</h2>
+      <div class="hei10"></div>
       <p v-for="(topic, index) in userData.recent_topics" v-show="index<5" :key="index"><a href="#">{{topic.title}}</a></p>
     </div>
   </div>
@@ -204,5 +207,6 @@ export default {
 .silde-bar p>a{font-size: 14px; color: #778087; line-height: 30px; text-decoration: none; white-space: nowrap;
     display: inline-block; text-overflow: ellipsis; overflow: hidden; vertical-align: middle;max-width: 100%;}
 .silde-bar p{padding-left: 10px;}
-.silde-bar h2{margin-bottom: 10px;}
+/* .silde-bar h2{margin-bottom: 10px;} */
+div.hei10{height: 10px; background: #fff;}
 </style>

@@ -18,9 +18,9 @@
             <div class="replies">
                 <p>回复的主题</p>
                 <ul>
-                    <li v-for="topic in userData.recent_topics" :key="topic.id">
+                    <li v-for="(topic, index) in userData.recent_topics" v-show="index<5" :key="index">
                         <img :src="topic.author.avatar_url" alt="">
-                        <router-link :to="{name:'post_content',params:{id:topic.id}}">{{topic.title}}</router-link>
+                        <router-link :to="{name:'article',params:{userId:topic.id}}">{{topic.title}}</router-link>
                         <span>{{topic.last_reply_at | timeFilter}}</span>
                     </li>
                 </ul>
@@ -28,9 +28,9 @@
             <div class="topics">
                 <p>创建的主题</p>
                 <ul>
-                    <li v-for="reply in userData.recent_replies" :key="reply.id">
+                    <li v-for="(reply, index) in userData.recent_replies" v-show="index<5" :key="index">
                         <img :src="reply.author.avatar_url" alt="">
-                        <router-link :to="{name:'post_content',params:{id:reply.id}}">{{reply.title}}</router-link>
+                        <router-link :to="{name:'article',params:{userId:reply.id}}">{{reply.title}}</router-link>
                         <span>{{reply.last_reply_at | timeFilter}}</span>
                     </li>
                 </ul>
